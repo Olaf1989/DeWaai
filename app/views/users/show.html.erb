@@ -1,0 +1,77 @@
+<% if can? :manage, User %><%# Only visible for beheerder %>
+<p>
+  <strong>Rol:</strong>
+  <% user_role_custom = @user.roles.pluck(:name).to_s %><%# Get the role name of the user %>
+  <%= user_role_custom.tr!('["]','').titleize %><%# Result from above and strip [] and " and also to lowercase %>
+</p>
+<% end %>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Achternaam:</strong>
+  <% if @user.surenamePrefix != nil%><%= @user.surenamePrefix %><% end %> <%= @user.surename %><%# Print out surenamePrefix if it has an value %>
+</p>
+
+<p>
+  <strong>Geboortedatum:</strong>
+  <%= friendly_date_compact(@user.birthdate) %><%# Friendly date helper %>
+</p>
+
+<p>
+  <strong>Adres:</strong>
+  <%= @user.address %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @user.zipcode %>
+</p>
+
+<p>
+  <strong>Plaats:</strong>
+  <%= @user.city %>
+</p>
+
+<p>
+  <strong>Telefoonnummer:</strong>
+  <%= @user.telephone %>
+</p>
+
+<br>
+<h3>Cursussen</h3>
+  <table class="table">
+    <thead>
+      <%# Amount of user sign-ups %>
+      Aantal inschrijvingen: <strong><%= @user.user_courses.count %></strong>
+      <%# Check if there is an user sign-up %>
+      <% if @user.user_courses.count != 0 %>
+        <tr>
+          <th>Naam</th>
+          <th>Begindatum</th>
+          <th>Einddatum</th>
+          <th>Aangemeld op</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%# User sign-ups for each %>
+        <% @user.courses.each do |u| %>
+        <tr>
+          <td><%= u.course_kind.name %></td>
+          <td><%= u.startdate %></td>
+          <td><%= u.enddate %></td>
+          <td><%= friendly_date_long(u.created_at) %></td>
+          <td><%= link_to(u) do %>Bekijk cursus<% end %></td>
+          <td></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+<%= link_to 'Wijzig', edit_user_path(@user) %> |
+<%= link_to 'Terug', users_path %>

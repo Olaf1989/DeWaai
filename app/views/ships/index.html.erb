@@ -1,0 +1,36 @@
+<h1>Overzicht van alle schepen</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Klasse</th>
+      <th>Naam</th>
+      <th>Schade</th>
+      <th>Max. cursisten</th>
+      <th>Gekoppeld aan cursussoort</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ships.each do |ship| %>
+      <tr>
+        <td><%= ship.classtype %></td>
+        <td><%= ship.name %></td>
+        <% if ship.damage == true %><%# Simple way to transform true / false to Ja / Nee %>
+          <td>Ja</td>
+        <% else %>
+          <td>Nee</td>
+        <% end %>
+        <td><%= ship.course_kind.maxusers %></td>
+        <td><%= ship.course_kind.name %></td>
+        <td><%= link_to '', ship, class: 'glyphicon glyphicon-search link' %></td>
+        <td><%= link_to '', edit_ship_path(ship), class: 'glyphicon glyphicon-pencil link' %></td>
+        <td><%= link_to '', ship, method: :delete, data: { confirm: 'Weet u zeker dat u dit wilt verwijderen?' }, class: 'glyphicon glyphicon-remove link' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<% if can? :manage, Ship %><%= link_to 'Nieuw schip', new_ship_path %><% end %> | <%= link_to 'Overzicht schepen met schade', :damage %>

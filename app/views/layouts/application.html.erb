@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"><%# Viewport for website scalability %>
+    <title>Zeilschool 'De Waai'</title><%# Website title %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %><%# Including stylesheets (/assets/stylesheets) %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %><%# Including javascripts (/assets/javascripts) %>
+    <%= csrf_meta_tags %>
+    <%= favicon_link_tag 'favicon.ico' %><%# Website favicon %>
+  </head>
+
+  <body>
+    <div class="container-fluid"><%# Flexible container @Bootstrap %>
+      <div class="row">
+        <div class="header-logo" style='float:left; width:200px;'><%= image_tag "logo.png", width: '200' %></div><%# Logo image %>
+        <h1 class="header-text">Zeilschool 'De Waai'</h1>
+        <div class="user-group noprint">
+          <%# Navigationlist login/signup %>
+          <ul class="nav navbar-nav navbar-right">
+            <% if current_user %><%# If there is a current_user (Someone logged in) %>
+              <li class="dropdown" role="presentation">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                   <span class="glyphicon glyphicon-user"></span>
+                   <%= current_user.firstname %><% if current_user.surenamePrefix != nil %> <%= current_user.surenamePrefix %><% end %> <%= current_user.surename %><%# Displaying first- and surename(inc. surenamePrefix) of the current_user %>
+                   <span class="up-down-switch">
+                     <span class="caret"></span>
+                 </span>
+                 </a>
+                 <ul class="dropdown-menu">
+                   <li><%= link_to "Bekijk profiel", user_path(current_user.id) %></li><%# View profile of current_user %>
+                   <li><%= link_to "Wijzig profiel", edit_user_path(current_user.id) %></li><%# Change profile of current_user %>
+                   <li role="separator" class="divider"></li>
+                   <li><%= link_to 'Verwijder profiel', current_user, method: :delete, data: { confirm: 'Are you sure?' } %></li><%# Delete profile of current_user %>
+                   <li role="separator" class="divider"></li>
+                   <li><%= link_to "Logout", :logout, method: :post %></li><%# Logout %>
+                 </ul>
+               </li>
+           <% else %><%# If there isn't a current_user (Not logged in) %>
+             <li><%= link_to " Registeren", new_user_path %></li><%# Register %>
+             <li><%= link_to " Inloggen", :login %></li><%# Login %>
+           <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row content">
+        <%# Sidebar  %>
+        <div class="col-xs-12 col-sm-4 col-lg-2 sidebar noprint">
+          <h2>Menu</h2>
+          <%# Menulist items %>
+          <div class="list-group">
+            <%# Give the class 'active' to elements if the current_page is (condition) %>
+            <li class="list-group-item <%= 'active' if current_page?(home_path) %>"><%= link_to("Home", :home) %></li>
+            <li class="list-group-item <%= 'active' if current_page?(about_path) %>"><%= link_to("Over de cursussen", :about) %></li>
+            <li class="list-group-item <%= 'active' if current_page?(courses_path) %>"><%= link_to("Cursussen", { action: "index", :controller => "courses"}) %></li>
+            <% if can? :manage, CourseKind %><%# Only visible if can manage course types %>
+              <li class="list-group-item <%= 'active' if current_page?(course_kinds_path) %>"><%= link_to("Soort curssusen", { action: "index", :controller => "course_kinds"}) %></li>
+            <% end %>
+            <% if can? :manage, Ship %><%# Only visible if can manage ships %>
+              <li class="list-group-item <%= 'active' if current_page?(ships_path) %>"><%= link_to("Schepen", { action: "index", :controller => "ships"}) %></li>
+            <% end %>
+            <% if can? :manage, User %><%# Only visible if can manage users %>
+              <li class="list-group-item <%= 'active' if current_page?(users_path) %>"><%= link_to("Gebruikers", { action: "index", :controller => "users"}) %></li>
+            <% end %>
+            <li class="list-group-item <%= 'active' if current_page?(contact_path) %>"><%= link_to("Contact", :contact) %></li>
+          </div>
+        </div>
+        <%# Content %>
+        <div class="col-xs-12 col-sm-8 col-lg-10 content-main">
+          <p id="notice"><%= flash[:notice] %></p><%# Notice messages %>
+          <p id="alert"><%= flash[:alert] %></p><%# Alert messages %>
+
+          <%# Content of the page %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        // Notice fade in / out animation %>
+        $('#notice').delay(0).fadeIn(1500, function() {
+          $(this).delay(2500).fadeOut(1500);
+        });
+
+        // Dropdown toggle animation for user group
+        $( ".dropdown-toggle" ).click(function() {
+          if($('.dropdown-menu').css('display') == 'none'){
+            $( ".dropdown-menu" ).slideDown( "slow" );
+            $( ".up-down-switch" ).addClass( "dropup" );
+          } else {
+            $( ".dropdown-menu" ).slideUp("slow");
+            $( ".up-down-switch" ).removeClass( "dropup" );
+          }
+        });
+
+        // Datepicker presets
+        $('.date-field input').datepicker({
+          format: "yyyy-mm-dd",
+          weekStart: 1,
+          autoclose: true,
+          todayHighlight: true
+        });
+
+        // Tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
+  </body>
+</html>

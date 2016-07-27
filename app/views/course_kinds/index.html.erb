@@ -1,0 +1,28 @@
+<h1>Overzicht van alle soorten cursussen</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Naam</th>
+      <th>Prijs</th>
+      <th>Max. aantal cursisten</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @course_kinds.each do |course_kind| %>
+      <tr>
+        <td><%= course_kind.name %></td>
+        <td><%= number_to_currency(course_kind.price, :locale => :en, :precision => (course_kind.price.round == course_kind.price) ? 0 : 2) %></td><%# Decimal to currency, locale link %>
+        <td><%= course_kind.maxusers %></td>
+        <td><%= link_to '', course_kind, class: 'glyphicon glyphicon-search link' %></td>
+        <td><%= link_to '', edit_course_kind_path(course_kind), class: 'glyphicon glyphicon-pencil link' %></td>
+        <td><%= link_to '', course_kind, method: :delete, data: { confirm: 'Weet u zeker dat u dit wilt verwijderen?' }, class: 'glyphicon glyphicon-remove link' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'Nieuw soort cursus', new_course_kind_path %>

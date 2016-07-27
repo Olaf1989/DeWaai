@@ -1,0 +1,41 @@
+<h1>Overzicht van alle medewerkers</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rol</th>
+      <th>E-mail</th>
+      <th>Voornaam</th>
+      <th>Achternaam</th>
+      <th>Geboortedatum</th>
+      <th>Adres</th>
+      <th>Postcode</th>
+      <th>Plaats</th>
+      <th>Telefoonnr.</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.with_role(:Medewerker).each do |user| %>
+      <tr>
+        <% user_role_custom = user.roles.pluck(:name).to_s %><%# Get the role name of the user %>
+        <td><%= user_role_custom.tr!('["]','').titleize %></td><%# Result from above and strip [] and " and also to lowercase %>
+        <td><%= user.email %></td>
+        <td><%= user.firstname %></td>
+        <td><% if user.surenamePrefix != nil%><%= user.surenamePrefix %><% end %> <%= user.surename %></td><%# Print out surenamePrefix if it has an value %>
+        <td><%= friendly_date_compact(user.birthdate) %></td><%# Friendly date helper %>
+        <td><%= user.address %></td>
+        <td><%= user.zipcode %></td>
+        <td><%= user.city %></td>
+        <td><%= user.telephone %></td>
+        <td><%= link_to '', user, class: 'glyphicon glyphicon-search link' %></td>
+        <td><%= link_to '', edit_user_path(user), class: 'glyphicon glyphicon-pencil link' %></td>
+        <td><%= link_to '', user, method: :delete, data: { confirm: 'Weet u zeker dat u dit wilt verwijderen?' }, class: 'glyphicon glyphicon-remove link' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'Terug', users_path %>

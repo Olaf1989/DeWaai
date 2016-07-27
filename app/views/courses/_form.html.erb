@@ -1,0 +1,36 @@
+<%= form_for(@course) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+      <% @course.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="col-xs-12 col-sm-8 col-lg-4">
+    <div class="form-group">
+      <%= f.label :course_kind, 'Soort cursus *', class: "col-md-4 control-label" %><br>
+      <%= f.collection_select :course_kind_id, CourseKind.order(:name), :id, :name, {}, {class: "form-control", :required => true, autofocus: true} %><%# Select list of all course types, order by name %>
+    </div>
+    <div class="field date-field">
+      <%= f.label :startdate, 'Begindatum *', class: "col-md-4 control-label" %><br>
+      <%= f.text_field :startdate, "data-provide" => 'datepicker', class: "form-control", :required => true %>
+    </div>
+    <div class="field date-field">
+      <%= f.label :enddate, 'Einddatum *', class: "col-md-4 control-label" %><br>
+      <%= f.text_field :enddate, "data-provide" => 'datepicker', class: "form-control", :required => true %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Bevestig', class: "btn btn-default btn-primary center-block" %>
+    </div>
+  </div>
+<% end %>
+<div class="hidden-xs col-sm-4 col-lg-8">
+  <h2>Toelichting</h2>
+  <p>Alle velden met een sterretje (*) zijn verplicht in te vullen.</p>
+  <p>Voor het invullen van een datum veld klikt u op het veld, er zal nu een extra venster geopend worden met datums. Selecteer de gewenste datum en  ga vervolgens naar het volgende veld.</p>
+  <p>Nadat alle verplichte velden minimaal zijn ingevuld kan de cursus worden aangemaakt door op de knop 'Bevestig' te klikken.</p>
+</div>
+<div style="clear:both;"></div>

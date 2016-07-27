@@ -1,0 +1,36 @@
+<h1>Overzicht van alle schepen</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Klasse</th>
+      <th>Naam</th>
+      <th>Schade</th>
+      <th>Max. cursisten</th>
+      <th>Gekoppeld aan cursussoort</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ships.where(:damage => true).each do |ship| %><%# Print out all the ships with damage %>
+      <tr>
+        <td><%= ship.classtype %></td>
+        <td><%= ship.name %></td>
+        <% if ship.damage == true %>
+          <td>Ja</td>
+        <% else %>
+          <td>Nee</td>
+        <% end %>
+        <td><%= ship.course_kind.maxusers %></td>
+        <td><%= ship.course_kind.name %></td>
+        <td><%= link_to '', ship, class: 'glyphicon glyphicon-search link' %></td>
+        <td><%= link_to '', edit_ship_path(ship), class: 'glyphicon glyphicon-pencil link' %></td>
+        <td><%= link_to '', ship, method: :delete, data: { confirm: 'Weet u zeker dat u dit wilt verwijderen?' }, class: 'glyphicon glyphicon-remove link' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'Terug naar overzicht schepen', ships_path %>

@@ -1,0 +1,71 @@
+<%= form_for(@user) do |f| %>
+  <div class="col-xs-12 col-sm-8 col-lg-4">
+    <% if can? :manage, User %><%# Only visibile for beheerder %>
+      <div class="field">
+        <%= f.label :role, 'Rol *', class: "col-md-4 control-label" %><br>
+        <div class="form-control">
+          <% Role.all.each do |role| %>
+            <label class="radio-inline"><%= radio_button_tag "user[role_ids]", role.id, @user.role_ids.include?(role.id), :required => true  %><%# Radio button for each role and check if the role is assigned %>
+            <%= role.name.humanize %></label><%# Capitalizes the first word, turns underscores into spaces, and strips a trailing ‘_id’ if present %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :email, 'E-mail *', class: "col-md-4 control-label" %><br>
+      <%= f.text_field :email, class: "form-control", :required => true, pattern: "^.+@.+$", autofocus: true %><%# Require @ and . %>
+    </div>
+    <div class="field">
+       <%= f.label :password, 'Wachtwoord *', class: "col-md-4 control-label" %><br />
+       <%= f.password_field :password, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :password_confirmation , 'Wachtwoord bevestiging *', class: "col-md-6 control-label" %><br />
+       <%= f.password_field :password_confirmation, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :firstname, 'Voornaam *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :firstname, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :surenamePrefix, 'Tussenvoegsel', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :surenamePrefix, class: "form-control" %>
+    </div>
+    <div class="field">
+       <%= f.label :surename, 'Achternaam *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :surename, class: "form-control", :required => true %>
+    </div>
+    <div class="field date-field">
+       <%= f.label :birthdate, 'Geboortedatum *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :birthdate, :start_year=>1900,:end_year=> Date.today.year, "data-provide" => 'datepicker', class: "form-control", :required => true %><%# Yearlist from 1900 till current year %>
+    </div>
+    <div class="field">
+       <%= f.label :address, 'Adres *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :address, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :zipcode, 'Postcode *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :zipcode, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :city, 'Plaats *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :city, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+       <%= f.label :telephone, 'Telefoonnr. *', class: "col-md-4 control-label" %><br />
+       <%= f.text_field :telephone, class: "form-control", pattern: "/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/", :required => true %><%# Only numbers allowed %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Bevestig', class: "btn btn-default btn-primary center-block" %>
+    </div>
+  </div>
+<% end %>
+<div class="hidden-xs col-sm-4 col-lg-8">
+  <h2>Toelichting</h2>
+  <p>Alle velden met een sterretje (*) zijn verplicht in te vullen.</p>
+  <p>Voor het invullen van een datum veld klikt u op het veld, er zal nu een extra venster geopend worden met datums. Selecteer de gewenste datum en  ga vervolgens naar het volgende veld.</p>
+  <p>Nadat alle verplichte velden minimaal zijn ingevuld kan de cursus worden aangemaakt door op de knop 'Bevestig' te klikken.</p>
+  <p>Heeft u al een account? <%= link_to 'Log dan hier in', :login %>.</p>
+</div>
+<div style="clear:both;"></div>

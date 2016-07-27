@@ -1,0 +1,43 @@
+<%= form_for(@ship) do |f| %>
+  <% if @ship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ship.errors.count, "error") %> prohibited this ship from being saved:</h2>
+      <ul>
+      <% @ship.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="col-xs-12 col-sm-8 col-lg-4">
+    <div class="field">
+      <%= f.label :classtype, 'Klasse *', class: "col-md-4 control-label" %><br>
+      <%= f.text_field :classtype, class: "form-control", :required => true, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= f.label :name, 'Naam *', class: "col-md-4 control-label" %><br>
+      <%= f.text_field :name, class: "form-control", :required => true %>
+    </div>
+    <div class="field">
+      <%= f.label :damage, 'Schade *', class: "col-md-4 control-label" %><br>
+      <div class="form-control">
+        <label class="radio-inline"><%= f.radio_button :damage, "1", :required => true, :checked => (@ship.damage == true) %> Ja</label><%# Damage true 'Ja' %>
+        <label class="radio-inline"><%= f.radio_button :damage, "0", :required => true, :checked => (@ship.damage == false) %> Nee</label><%# Damage false 'Nee' %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :course_kind_id, 'Soort cursus *', class: "col-md-4 control-label" %><br>
+      <%= f.collection_select(:course_kind_id, CourseKind.order(:id), :id, :name, {}, {:class=>'form-control', :required => true}) %><%# Select list with all the course types, order by id %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Bevestig', class: "btn btn-default btn-primary center-block" %>
+    </div>
+  </div>
+<% end %>
+<div class="hidden-xs col-sm-4 col-lg-8">
+  <h2>Toelichting</h2>
+  <p>Alle velden met een sterretje (*) zijn verplicht in te vullen.</p>
+  <p>Voor het invullen van een datum veld klikt u op het veld, er zal nu een extra venster geopend worden met datums. Selecteer de gewenste datum en  ga vervolgens naar het volgende veld.</p>
+  <p>Nadat alle verplichte velden minimaal zijn ingevuld kan de cursus worden aangemaakt door op de knop 'Bevestig' te klikken.</p>
+</div>
+<div style="clear:both;"></div>

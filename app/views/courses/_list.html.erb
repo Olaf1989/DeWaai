@@ -1,0 +1,56 @@
+<div id="filterrific_results">
+  <table class="table">
+    <thead>
+      <tr>
+        <% if current_user%><th></th><% end %>
+        <th>Cursus naam</th>
+        <th>Prijs</th>
+        <% if can? :manage, Course %><th colspan="3" class="text-center">Aantal inschrijvingen</th>
+        <th>Totaal</th><% end %>
+        <th>Begindatum</th>
+        <th>Einddatum</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @coursesAmount = 0 %>
+      <% @courses.each do |course| %>
+      <% @courseAmount = course.course_kind.price * course.user_courses.count %><%# Courses total = course price * course users %>
+        <tr>
+          <%# Check if user is logged in %>
+          <% if current_user %>
+            <%# If the user is allready signed-up for the course %>
+            <% if current_user.courses.include?(course) %>
+              <td><a href="#" data-toggle="tooltip" data-placement="top" title="Aangemeld"><i class="glyphicon glyphicon-ok"></i></a></td>
+            <% else %>
+              <td></td>
+            <% end %>
+          <% end %>
+          <td><%= course.course_kind.name %></td>
+          <td><%= number_to_currency(course.course_kind.price, :locale => :en, :precision => (course.course_kind.price.round == course.course_kind.price) ? 0 : 2) %></td><%# Decimal to currency, locale link %>
+          <% if can? :manage, Course %>
+            <td>x</td>
+            <td><%= course.user_courses.count %></td>
+            <td>=</td>
+            <td><%= number_to_currency(@courseAmount, :locale => :en, :precision => (@courseAmount.round == @courseAmount) ? 0 : 2) %></td><%# Decimal to currency, locale link %>
+          <% end %>
+          <td><%= friendly_date_compact(course.startdate) %></td><%# Friendly date helper %>
+          <td><%= friendly_date_compact(course.enddate) %></td><%# Friendly date helper %>
+          <td><%= link_to '', course, class: 'glyphicon glyphicon-search link noprint' %></td>
+          <% if can? :manage, Course %><%# If can manage courses %>
+            <td><%= link_to '', edit_course_path(course), class: 'glyphicon glyphicon-pencil link noprint' %></td>
+            <td><%= link_to '', course, method: :delete, data: { confirm: 'Weet u zeker dat u dit wilt verwijderen?' }, class: 'glyphicon glyphicon-remove link noprint' %></td>
+          <% end %>
+        </tr>
+        <% @coursesAmount = @coursesAmount + @courseAmount %><%# Add course total to the courses total %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if can? :manage, Course %>
+    <div class="pull-right">
+      Totale opbrengst <b><%= number_to_currency(@coursesAmount, :locale => :en, :precision => (@coursesAmount == @coursesAmount) ? 0 : 2) %></b> <%# Total amount of money off all the courses (within the filters condition(s)) %>
+    </div>
+  <% end %>
+</div>

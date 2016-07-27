@@ -1,0 +1,17 @@
+<p>
+  <strong>Naam:</strong>
+  <%= @course_kind.name %>
+</p>
+
+<p>
+  <strong>Prijs:</strong>
+  <%= number_to_currency(@course_kind.price, :locale => :en, :precision => (@course_kind.price.round == @course_kind.price) ? 0 : 2) %><%# Decimal to currency, locale link %>
+</p>
+
+<p>
+  <strong>Max. aantal cursisten:</strong>
+  <%= @course_kind.maxusers %>
+</p>
+
+<%= link_to 'Wijzig', edit_course_kind_path(@course_kind) %> |
+<%= link_to 'Terug', course_kinds_path %>

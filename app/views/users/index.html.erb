@@ -1,0 +1,23 @@
+<h1>Overzicht van alle gebruikers</h1>
+
+<%# Filters for users %>
+<%= form_for_filterrific @filterrific do |f| %>
+  <div id="filters">
+    <div class="filter"><b>Sorteer</b><br> <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, {class: 'form-control'}) %></div>
+    <div class="filter date-field"><b>Aangemaakt vanaf</b><br> <%= f.text_field(:with_created_at_gte, class: 'js-datepicker form-control', :data => {:provide => "datepicker"} ) %></div>
+    <div class="filter date-field"><b>Aangemaakt tot</b><br> <%= f.text_field(:with_created_at_lte, class: 'js-datepicker form-control', :data => {:provide => "datepicker"} ) %></div>
+    <div class="filter"><b>Zoek</b> <a href="#" data-toggle="tooltip" title="Als u wilt zoeken ongeacht de positie van uw zoekopdracht, voer dan een sterretje(*) voor de zoekterm in. Meerdere losse woorden dienen verbonden te worden met een laag streepje ( _ )." class="glyphicon glyphicon-info-sign" style="cursor:default;"></a><br>
+      <%= f.text_field(:search_query, class: 'form-control') %>
+    </div>
+    <div class="filter"><br><%= f.submit 'Toepassen', class: "btn btn-default btn-primary"  %></div>
+    <div class="filter"><br><%= link_to('Reset filters', reset_filterrific_url, class: "btn btn-default btn-danger" ) %></div>
+  </div>
+  <div class="loading"><%= render_filterrific_spinner %></div>
+<% end %>
+
+<%# Get userlist %>
+<div class="filterrific-results-content">
+  <%= render(partial: 'users/list', locals: { users: @users }) %>
+</div>
+
+<%= link_to 'Nieuwe gebruiker', new_user_path %> | <%= link_to 'Overzicht medewerkers', employees_path %>

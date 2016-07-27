@@ -1,0 +1,7 @@
+<%# app/views/users/index.js.erb %>
+
+<%# Refresh userslist after applying an filter %>
+<% js = escape_javascript(
+  render(partial: 'users/list', locals: { users: @users })
+) %>
+$("#filterrific_results").html("<%= js %>");

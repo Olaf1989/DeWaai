@@ -1,0 +1,16 @@
+@media print {
+
+  .noprint {
+    display: none !important;
+  }
+
+  .third{
+    float:left !important;
+    max-width: 32% !important;
+  }
+
+
+  table, h1, img{
+    margin: 0 auto !important;
+  }
+}

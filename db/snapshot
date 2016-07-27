@@ -1,0 +1,308 @@
+---
+:now: 2016-06-16 11:26:17.018640000 Z
+:tables:
+- :table: course_kinds
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - name
+    - price
+    - created_at
+    - updated_at
+    - maxusers
+    rows:
+    - - 1
+      - Beginner
+      - 500
+      - '2016-06-06 12:06:04.542425'
+      - '2016-06-09 13:04:38.823321'
+      - 5
+    - - 2
+      - Gevorderde
+      - 700
+      - '2016-06-06 12:25:04.790969'
+      - '2016-06-08 13:26:11.750800'
+      - 4
+    - - 3
+      - Wadlopen
+      - 800
+      - '2016-06-06 12:25:13.413227'
+      - '2016-06-08 13:26:38.542385'
+      - 10
+    hash_rows: 
+    column_types: {}
+- :table: users
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - email
+    - crypted_password
+    - salt
+    - created_at
+    - updated_at
+    - firstname
+    - surenamePrefix
+    - surename
+    - birthdate
+    - city
+    - telephone
+    - address
+    - zipcode
+    rows:
+    - - 1
+      - olafvdb@hotmail.com
+      - "$2a$10$hDONKfVm7.LxULtSLtKFQ.i39cHR83uwWpZPxTI6bN72YeBG2Yx0m"
+      - QdpBeTqpsC5TuiJewnHD
+      - '2016-06-07 09:09:25.454836'
+      - '2016-06-08 10:01:32.649286'
+      - Olaf
+      - van de
+      - Belt
+      - '1989-04-18'
+      - Hardenberg
+      - 612345678
+      - Voorstraat 12
+      - 7772AZ
+    - - 2
+      - henkk@hotmail.com
+      - "$2a$10$xK5/mYCMCrJLm1CJh0WbLOT6P0Dxfu/ONr35yiMULV.NWtzbZLAYC"
+      - pVty2RGwhqGWPSSvHwsU
+      - '2016-06-07 09:52:20.156205'
+      - '2016-06-09 07:06:59.544113'
+      - Henk
+      - ''
+      - Klaasen
+      - '1990-12-08'
+      - Zwolle
+      - 678945612
+      - Achterpad 1
+      - 9513AZ
+    - - 3
+      - keesvds@hotmail.com
+      - "$2a$10$ej81ERTb6gwMhZe316eNKuMqzFAvzFQPWyUqN5hZ7I8y9k7MzibQO"
+      - H3K9V142NNbyUiBRFx1G
+      - '2016-06-07 09:55:07.860370'
+      - '2016-06-14 08:29:04.187207'
+      - Kees
+      - van der
+      - Spek
+      - '1985-12-13'
+      - Almelo
+      - 645612378
+      - Fonteinkruid 8
+      - 4567AZ
+    - - 4
+      - pietsnel@hotmail.com
+      - "$2a$10$lH.FhiQiZM5RpHGPmb6UDu1TLD0nmbnH89gyo63VioXK7IxZQGFWq"
+      - T5JP9Nsb3Tuxwef1yUzW
+      - '2016-06-07 09:55:58.915402'
+      - '2016-06-09 08:37:17.127862'
+      - Piet
+      - ''
+      - Snel
+      - '1987-01-25'
+      - Hoogeveen
+      - 678912345
+      - Voorweg 19
+      - 8523AZ
+    - - 5
+      - p.brenninkmeijer@hotmail.com
+      - "$2a$10$u7d.tU4JlrZGzcACuV9VLeCIeo7wxc3oOk.1tixysBCo5U6QVloLy"
+      - qEhDZ74padP4Ngw1nobd
+      - '2016-06-07 09:56:59.824104'
+      - '2016-06-09 08:37:37.972817'
+      - Paulien
+      - ''
+      - Brenninkmeijer
+      - '1980-03-01'
+      - Raalte
+      - 612378945
+      - Brunsweg 56
+      - 7589AZ
+    - - 29
+      - hendrikg@hotmail.com
+      - "$2a$10$u1pH1hFN7aD4YBUsaXyc7usqcnZ8YypZIQ4fFd/e9SUzCk1Opq5Pm"
+      - aNPvy2BN27eynkAzZFMq
+      - '2016-06-14 09:49:15.284543'
+      - '2016-06-14 09:53:23.161993'
+      - Hendrik
+      - der
+      - Groote
+      - '1999-01-23'
+      - Rotterdam
+      - 123456789
+      - Achterstraat 9
+      - 7894 AX
+    - - 31
+      - ditmagnietmeerbestaan@hotmail.com
+      - "$2a$10$h/EX1pvGfv8kA1ffDeylAuwsFgSJd1ocFZQqLQi8BnWuViePw4ig6"
+      - 7Bu8zzc2GU2s8fs3JcrC
+      - '2016-06-16 08:14:00.112823'
+      - '2016-06-16 08:14:00.112823'
+      - Test
+      - ''
+      - Account
+      - '2016-06-25'
+      - Hardenberg
+      - 6123456
+      - Voorstraat 1
+      - 1234AZ
+    hash_rows: 
+    column_types: {}
+- :table: user_courses
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - course_id
+    - user_id
+    rows:
+    - - 7
+      - 2
+      - 4
+    - - 17
+      - 1
+      - 29
+    hash_rows: 
+    column_types: {}
+- :table: roles
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - name
+    - resource_id
+    - resource_type
+    - created_at
+    - updated_at
+    rows:
+    - - 1
+      - Cursist
+      - 
+      - 
+      - '2016-06-07 11:41:40.070512'
+      - '2016-06-07 11:41:40.070512'
+    - - 2
+      - Medewerker
+      - 
+      - 
+      - '2016-06-07 11:42:06.382344'
+      - '2016-06-07 11:42:06.382344'
+    - - 3
+      - Beheerder
+      - 
+      - 
+      - '2016-06-07 11:42:24.403673'
+      - '2016-06-07 11:42:24.403673'
+    hash_rows: 
+    column_types: {}
+- :table: users_roles
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - user_id
+    - role_id
+    rows:
+    - - 1
+      - 3
+    - - 4
+      - 2
+    - - 5
+      - 3
+    - - 3
+      - 1
+    - - 2
+      - 1
+    - - 29
+      - 1
+    - - 31
+      - 1
+    hash_rows: 
+    column_types: {}
+- :table: courses
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - startdate
+    - enddate
+    - created_at
+    - updated_at
+    - course_kind_id
+    rows:
+    - - 1
+      - '2016-06-06'
+      - '2016-06-11'
+      - '2016-06-06 12:06:25.663311'
+      - '2016-06-07 10:55:32.606324'
+      - 2
+    - - 2
+      - '2016-06-06'
+      - '2016-06-11'
+      - '2016-06-06 12:21:26.399032'
+      - '2016-06-07 08:42:21.169855'
+      - 3
+    - - 3
+      - '2016-06-13'
+      - '2016-06-18'
+      - '2016-06-06 12:25:48.758942'
+      - '2016-06-07 08:42:32.300325'
+      - 1
+    - - 4
+      - '2016-06-20'
+      - '2016-06-25'
+      - '2016-06-07 08:42:47.833959'
+      - '2016-06-07 08:42:47.833959'
+      - 2
+    - - 5
+      - '2016-06-20'
+      - '2016-06-25'
+      - '2016-06-07 08:43:02.908500'
+      - '2016-06-07 08:43:02.908500'
+      - 3
+    hash_rows: 
+    column_types: {}
+- :table: ships
+  :rows: !ruby/object:ActiveRecord::Result
+    columns:
+    - id
+    - classtype
+    - name
+    - damage
+    - created_at
+    - updated_at
+    - course_kind_id
+    rows:
+    - - 1
+      - 16-kwadraats
+      - Gekke Henk
+      - t
+      - '2016-06-07 07:34:45.603969'
+      - '2016-06-07 08:39:56.299305'
+      - 1
+    - - 2
+      - Draak
+      - Watervreter
+      - f
+      - '2016-06-07 08:34:27.107728'
+      - '2016-06-07 08:34:27.107728'
+      - 2
+    - - 3
+      - Grote schouw
+      - Napoleon
+      - t
+      - '2016-06-07 08:38:20.834780'
+      - '2016-06-07 08:39:02.619905'
+      - 3
+    - - 4
+      - Draak
+      - Columbus
+      - f
+      - '2016-06-07 08:38:54.730284'
+      - '2016-06-07 08:38:54.730284'
+      - 2
+    - - 5
+      - 16-kwadraats
+      - Quelbrunn
+      - f
+      - '2016-06-07 08:39:47.653134'
+      - '2016-06-09 06:55:30.371840'
+      - 1
+    hash_rows: 
+    column_types: {}

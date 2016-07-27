@@ -1,0 +1,21 @@
+<%= form_tag user_sessions_path, :method => :post do %>
+  <div class="col-xs-12 col-sm-8 col-lg-4">
+    <div class="field">
+      <%= label_tag :email, 'E-mail *', class: "col-md-4 control-label" %><br />
+      <%= text_field_tag :email, nil, class: "form-control", autofocus: true %><%# Autofocus %>
+    </div>
+    <div class="field">
+      <%= label_tag :password, 'Wachtwoord *', class: "col-md-4 control-label" %><br />
+      <%= password_field_tag :password, nil, class: "form-control" %>
+    </div>
+    <div class="actions">
+      <%= submit_tag 'Inloggen', class: "btn btn-default btn-primary center-block" %>
+    </div>
+  </div>
+<% end %>
+<div class="hidden-xs col-sm-4 col-lg-8">
+  <h2>Toelichting</h2>
+  <p>Alle velden met een sterretje (*) zijn verplicht in te vullen.</p>
+  <p>Indien u nog geen account heeft, moet u zich eerst <%= link_to 'registreren', :register %>.</p>
+</div>
+<div style="clear:both;"></div>

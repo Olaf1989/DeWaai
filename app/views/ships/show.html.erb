@@ -1,0 +1,31 @@
+<p>
+  <strong>Klasse:</strong>
+  <%= @ship.classtype %>
+</p>
+
+<p>
+  <strong>Naam:</strong>
+  <%= @ship.name %>
+</p>
+
+<p>
+  <strong>Schade:</strong>
+  <% if @ship.damage == true %><%# Simple way to transform true / false to Ja / Nee %>
+    Ja
+  <% else %>
+    Nee
+  <% end %>
+</p>
+
+<p>
+  <strong>Max. cursisten:</strong>
+  <%= @ship.course_kind.maxusers %>
+</p>
+
+<p>
+  <strong>Soort cursus:</strong>
+  <%= @ship.course_kind.name %>
+</p>
+
+<%= link_to 'Wijzig', edit_ship_path(@ship) %> |
+<%= link_to 'Terug', ships_path %>

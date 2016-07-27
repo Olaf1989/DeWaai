@@ -1,0 +1,96 @@
+<h1>Cursusnr. <i><%= @course.id %></i></h1>
+
+<% if can? :manage, Course %><%# Only visible if can manage courses %>
+  <div class="filter pull-right flickr_pagination noprint" style="margin-top:20px;">
+    <%= link_to "Print", '#', onclick: "printpage()" %><%# Print page %>
+  </div>
+<% end %>
+
+<p>
+  <strong>Cursus:</strong>
+  <%= @course.course_kind.name %>
+</p>
+
+<p>
+  <strong>Prijs:</strong>
+  <%= number_to_currency(@course.course_kind.price, :locale => :en, :precision => (@course.course_kind.price.round == @course.course_kind.price) ? 0 : 2) %><%# Decimal to currency, locale link %>
+</p>
+
+<p>
+  <strong>Begindatum:</strong>
+  <%= friendly_date_compact(@course.startdate) %>
+</p>
+
+<p>
+  <strong>Einddatum:</strong>
+  <%= friendly_date_compact(@course.enddate) %>
+</p>
+
+<%# Current_user check %>
+<% if (current_user != nil) && (current_user.has_role? :Cursist) %>
+<%# If current_user is allready signed up %>
+  <% if current_user.courses.include?(@course) %><%# Check if the current_user is allreaady signed up %>
+      <%= form_for [@course, @course.user_courses.build] do |f| %>
+        <%= f.submit "Afmelden", class: "btn btn-default btn-danger noprint" %>
+      <% end %>
+  <%# If current_user isn't signed up %>
+  <% elsif @course.user_courses.count < @course.course_kind.maxusers %><%# Check if the course isn't full yet %>
+      <%= form_for [@course, @course.user_courses.build] do |f| %>
+        <%= f.submit "Aanmelden", class: "btn btn-default btn-primary noprint" %>
+      <% end %>
+    <%# end %>
+  <% end %>
+<% elsif current_user == nil %>
+    <b style="color:red;">Inschrijven kan pas nadat er is ingelogd.</b> <%# Message for not logged in users (visitors) %>
+<% end %>
+<br /><br />
+
+<table class="table">
+  <thead>
+    <%# Amount of course signups %>
+    Aantal inschrijvingen: <strong><%= @course.user_courses.count %> / <%= @course.course_kind.maxusers %></strong><%# Amount of sign-ups and the max sign-ups %>
+    <% if can? :manage, Course %>
+    <%# Get total revenues %>
+      <% @courseAmount = @course.course_kind.price * @course.user_courses.count %>
+      <p class="pull-right">Totale opbrengst <b><%= number_to_currency(@courseAmount, :locale => :en, :precision => (@courseAmount.round == @courseAmount) ? 0 : 2) %></b></p>
+
+      <%# If there are any courses %>
+      <% if @course.user_courses.count != 0 %>
+        <tr>
+          <th>Naam</th>
+          <th>E-mail</th>
+          <th>Geboortedatum</th>
+          <th>Adres</th>
+          <th>Postcode</th>
+          <th>Plaats</th>
+          <th>Telefoonnummer</th>
+          <% if can? :manage, User %><th class="noprint"></th><% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <%# All signed-up users of this course %>
+        <% @course.users.each do |u| %>
+          <tr>
+            <td><%= u.firstname %>
+                <% if u.surenamePrefix != nil %>
+                  <%= u.surenamePrefix %>
+                <% end %>
+                <%= u.surename %>
+            </td>
+            <td><%= u.email %></td>
+            <td><%= friendly_date_compact(u.birthdate) %></td>
+            <td><%= u.address %></td>
+            <td><%= u.zipcode %></td>
+            <td><%= u.city %></td>
+            <td><%= u.telephone %></td>
+            <%# Show profile only visisble for 'Beheerder' %>
+            <td class="noprint"><% if can? :manage, User %><%# Only visible if can manage users %><%= link_to(u) do %>Bekijk profiel<% end %><% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  <% end %>
+</table>
+
+<% if can? :manage, Course %><%# Only visible if can manage courses %><%= link_to 'Wijzig', edit_course_path(@course), class: 'noprint' %> |<% end %><%# Print page only %>
+<%= link_to 'Terug', courses_path, class: 'noprint' %>
